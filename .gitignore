@@ -1,0 +1,6 @@
+.commandcode/
+PROGRESSIVE_COMMIT_PLAN.md
+.DS_Store
+*.log
+*.tmp
+.env
