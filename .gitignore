@@ -1,6 +1,35 @@
+# Command Code / local agent state
 .commandcode/
+
+# Planning artefacts (kept local; not part of the submission)
 PROGRESSIVE_COMMIT_PLAN.md
+
+# Local evidence-capture helper stack. This lives in the parent folder by
+# design, but is ignored here so it can never be committed by accident if the
+# whole working folder is ever staged from the repository root.
+docker-compose.yml
+capture_evidence.ps1
+capture_evidence_native.ps1
+daily-commit.ps1
+
+# Ad-hoc psql output files created by the commands in the portfolio READMEs
+plans_baseline.txt
+plans_indexed.txt
+
+# Environment and secrets
+.env
+*.env
+
+# OS and editor junk
 .DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs and temp files
 *.log
 *.tmp
-.env

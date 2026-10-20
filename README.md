@@ -73,8 +73,10 @@ advanced-database-portfolio/
 ├── portfolio-2-query-optimisation/
 │   ├── README.md                              # Query objectives and benchmark procedure
 │   ├── 01_advanced_queries.sql                # Window functions, CTEs and aggregation pipelines
-│   ├── 02_execution_plans.json                # EXPLAIN (ANALYZE, BUFFERS) JSON output
-│   └── 03_indexing_benchmarks.md              # Latency, buffer and cost comparison tables
+│   ├── 02_execution_plans.json                # Captured plan for query 1 plus benchmark metrics
+│   ├── 03_indexing_benchmarks.md              # Latency, buffer and cost comparison tables
+│   ├── 04_synthetic_data_generator.sql        # Synthetic dataset matching documented cardinalities
+│   └── 05_index_creation.sql                  # Supporting indexes, re-runnable
 ├── portfolio-3-transactions-concurrency/
 │   ├── README.md                              # Transaction test harness
 │   ├── 01_acid_transfer_commit.sql            # Atomic transfer with row locks (COMMIT)
@@ -142,7 +144,7 @@ cypher-shell -u neo4j -p password -f portfolio-4-nosql/03_neo4j_aml_detection.cy
 | Directory | Activity | Principal Evidence |
 | :--- | :--- | :--- |
 | `portfolio-1-database-design` | Relational schema, constraints, ERD and normalisation | `01_schema_ddl.sql`, `02_erd_specification.md`, `03_normalisation_proof.md` |
-| `portfolio-2-query-optimisation` | Complex SQL, execution plans and indexing | `01_advanced_queries.sql`, `02_execution_plans.json`, `03_indexing_benchmarks.md` |
+| `portfolio-2-query-optimisation` | Complex SQL, execution plans and indexing | `01_advanced_queries.sql`, `02_execution_plans.json`, `03_indexing_benchmarks.md`, `04_synthetic_data_generator.sql`, `05_index_creation.sql` |
 | `portfolio-3-transactions-concurrency` | ACID guarantees, fault injection and isolation | `01_acid_transfer_commit.sql`, `02_rollback_fault_injection.sql`, `03_isolation_concurrency_study.md` |
 | `portfolio-4-nosql` | Document, key-value and graph persistence | `01_mongodb_webhook_events.json`, `02_redis_rate_limiter.lua`, `03_neo4j_aml_detection.cypher`, `04_polyglot_tradeoff_matrix.md` |
 | `portfolio-5-distributed-cloud` | Replication, sharding, failover and disaster recovery | `01_replication_sharding_topology.md`, `02_patroni_cluster_config.yaml`, `03_citus_sharding_setup.sql`, `04_cap_pacelc_resilience_study.md` |
