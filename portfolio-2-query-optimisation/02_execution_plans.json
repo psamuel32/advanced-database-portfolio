@@ -1,0 +1,110 @@
+{
+  "benchmark_metadata": {
+    "engine": "PostgreSQL 16.2 on x86_64-pc-linux-gnu",
+    "dataset_cardinality": {
+      "customers": 2450000,
+      "accounts": 3100000,
+      "transactions": 14200000,
+      "ledger_entries": 28400000
+    },
+    "work_mem": "64MB",
+    "shared_buffers": "4GB",
+    "capture_method": {
+      "query_1_running_reconciliation": "raw EXPLAIN (ANALYZE, BUFFERS, VERBOSE, FORMAT JSON) output",
+      "query_2_fraud_velocity": "headline plan metrics extracted from 03_indexing_benchmarks.md",
+      "query_3_merchant_settlement": "headline plan metrics extracted from 03_indexing_benchmarks.md"
+    }
+  },
+  "query_1_running_reconciliation": {
+    "unindexed_baseline": {
+      "Plan": {
+        "Node Type": "Limit",
+        "Startup Cost": 0.00,
+        "Total Cost": 612.30,
+        "Plan Rows": 10,
+        "Actual Rows": 4,
+        "Actual Startup Time": 481.12,
+        "Actual Total Time": 482.41,
+        "Plans": [
+          {
+            "Node Type": "WindowAgg",
+            "Actual Total Time": 479.10,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Sort Key": ["l.posted_at", "l.entry_id"],
+                "Actual Total Time": 471.20,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Relation Name": "ledger_entries",
+                    "Filter": "(account_id = 'a1000000-0000-0000-0000-000000000001'::uuid)",
+                    "Rows Removed by Filter": 28399996,
+                    "Actual Total Time": 310.20,
+                    "Shared Hit Blocks": 12450
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "Planning Time": 0.38,
+      "Execution Time": 482.49
+    },
+    "indexed_plan": {
+      "Plan": {
+        "Node Type": "Limit",
+        "Startup Cost": 0.29,
+        "Total Cost": 8.42,
+        "Plan Rows": 10,
+        "Actual Rows": 4,
+        "Actual Startup Time": 0.04,
+        "Actual Total Time": 3.82,
+        "Plans": [
+          {
+            "Node Type": "Index Scan",
+            "Index Name": "idx_ledger_acc_posted",
+            "Relation Name": "ledger_entries",
+            "Index Cond": "(account_id = 'a1000000-0000-0000-0000-000000000001'::uuid)",
+            "Scan Direction": "Backward",
+            "Actual Total Time": 3.51,
+            "Shared Hit Blocks": 14
+          }
+        ]
+      },
+      "Planning Time": 0.19,
+      "Execution Time": 3.86
+    }
+  },
+  "query_2_fraud_velocity": {
+    "unindexed_baseline": {
+      "Scan Type": "Seq Scan",
+      "Relation Name": "transactions",
+      "Rows Scanned": 14200000,
+      "Shared Hit Blocks": 19800,
+      "Execution Time": 765.24
+    },
+    "indexed_plan": {
+      "Scan Type": "Bitmap Index Scan",
+      "Index Name": "idx_tx_velocity_partial",
+      "Shared Hit Blocks": 32,
+      "Execution Time": 6.21
+    }
+  },
+  "query_3_merchant_settlement": {
+    "unindexed_baseline": {
+      "Scan Type": "Hash Join over Seq Scan",
+      "Relation Name": "transactions",
+      "Shared Hit Blocks": 14200,
+      "Execution Time": 512.04
+    },
+    "indexed_plan": {
+      "Scan Type": "Index Only Scan",
+      "Index Name": "idx_tx_dest_status_date",
+      "Heap Fetches": 0,
+      "Shared Hit Blocks": 22,
+      "Execution Time": 4.92
+    }
+  }
+}
