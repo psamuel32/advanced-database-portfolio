@@ -1,0 +1,29 @@
+[
+  {
+    "_id": { "$oid": "6532890b91e8432a104c9901" },
+    "event_id": "EVT-2026-98124",
+    "event_type": "WEBHOOK_PAYMENT_CALLBACK",
+    "source_provider": "MASTERCARD_GATEWAY_V3",
+    "timestamp": { "$date": "2026-10-17T08:32:10.450Z" },
+    "payload": {
+      "merchant_id": "m2000000-0000-0000-0000-000000000001",
+      "terminal_id": "POS-LAG-9812",
+      "iso_response_code": "00",
+      "auth_code": "AUTH99812",
+      "card_details": {
+        "bin": "539981",
+        "scheme": "MASTERCARD",
+        "issuer": "FIRST_CITY_MONUMENT",
+        "country": "NGA"
+      },
+      "risk_telemetry": {
+        "ip_address": "102.89.23.11",
+        "geolocation": { "lat": 6.5244, "lon": 3.3792, "city": "Lagos" },
+        "device_fingerprint": "a9f87c2b3e8912de54fa",
+        "tor_exit_node": false
+      }
+    },
+    "processed": true,
+    "retry_count": 0
+  }
+]
