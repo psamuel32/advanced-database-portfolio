@@ -1,0 +1,32 @@
+﻿                                     Table "public.accounts"
+     Column     |           Type           | Collation | Nullable |            Default            
+----------------+--------------------------+-----------+----------+-------------------------------
+ account_id     | uuid                     |           | not null | uuid_generate_v4()
+ customer_id    | uuid                     |           | not null | 
+ account_number | character varying(16)    |           | not null | 
+ currency       | character(3)             |           | not null | 
+ account_type   | character varying(32)    |           | not null | 'CHECKING'::character varying
+ balance        | numeric(18,4)            |           | not null | 0.0000
+ ledger_balance | numeric(18,4)            |           | not null | 0.0000
+ status         | character varying(32)    |           | not null | 'ACTIVE'::character varying
+ created_at     | timestamp with time zone |           | not null | CURRENT_TIMESTAMP
+ updated_at     | timestamp with time zone |           | not null | CURRENT_TIMESTAMP
+Indexes:
+    "accounts_pkey" PRIMARY KEY, btree (account_id)
+    "accounts_account_number_key" UNIQUE CONSTRAINT, btree (account_number)
+Check constraints:
+    "accounts_account_type_check" CHECK (account_type::text = ANY (ARRAY['CHECKING'::character varying, 'SAVINGS'::character varying, 'ESCROW'::character varying, 'MERCHANT_SETTLEMENT'::character varying]::text[]))
+    "accounts_balance_check" CHECK (balance >= 0::numeric)
+    "accounts_currency_check" CHECK (currency = ANY (ARRAY['NGN'::bpchar, 'USD'::bpchar, 'EUR'::bpchar, 'GBP'::bpchar]))
+    "accounts_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'DORMANT'::character varying, 'BLOCKED'::character varying]::text[]))
+Foreign-key constraints:
+    "accounts_customer_id_fkey" FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT
+Referenced by:
+    TABLE "cards" CONSTRAINT "cards_account_id_fkey" FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE CASCADE
+    TABLE "ledger_entries" CONSTRAINT "ledger_entries_account_id_fkey" FOREIGN KEY (account_id) REFERENCES accounts(account_id) ON DELETE RESTRICT
+    TABLE "merchants" CONSTRAINT "merchants_settlement_account_id_fkey" FOREIGN KEY (settlement_account_id) REFERENCES accounts(account_id) ON DELETE RESTRICT
+    TABLE "transactions" CONSTRAINT "transactions_dest_account_id_fkey" FOREIGN KEY (dest_account_id) REFERENCES accounts(account_id) ON DELETE RESTRICT
+    TABLE "transactions" CONSTRAINT "transactions_source_account_id_fkey" FOREIGN KEY (source_account_id) REFERENCES accounts(account_id) ON DELETE RESTRICT
+Triggers:
+    set_timestamp_accounts BEFORE UPDATE ON accounts FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp()
+

@@ -1,0 +1,8 @@
+﻿   table_name   | citus_table_type | distribution_column | colocation_id | shard_count 
+----------------+------------------+---------------------+---------------+-------------
+ customers      | reference        | <none>              |             1 |           1
+ merchants      | local            | <none>              |             0 |           1
+ ledger_entries | distributed      | account_id          |             2 |          32
+ accounts       | distributed      | account_id          |             2 |          32
+(4 rows)
+

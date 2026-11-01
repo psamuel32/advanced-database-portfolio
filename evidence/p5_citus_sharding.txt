@@ -1,0 +1,71 @@
+﻿psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:8: NOTICE:  extension "citus" already exists, skipping
+CREATE EXTENSION
+ citus_set_coordinator_host 
+----------------------------
+ 
+(1 row)
+
+ citus_set_node_property 
+-------------------------
+ 
+(1 row)
+
+DROP TRIGGER
+DROP TRIGGER
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.accounts$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.accounts$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.transactions$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.ledger_entries$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.merchants$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.cards$$) prevents this for the given relation, and all of the connected relations
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:28: NOTICE:  local tables that are added to metadata automatically by citus, but not chained with reference tables via foreign keys might be automatically converted back to postgres tables
+HINT:  Executing citus_add_local_table_to_metadata($$public.fraud_alerts$$) prevents this for the given relation, and all of the connected relations
+ create_reference_table 
+------------------------
+ 
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  removing table public.transactions from metadata as it is not connected to any reference tables via foreign keys
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  creating a new table for public.transactions
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  moving the data of public.transactions
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  dropping the old public.transactions
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  renaming the new table to public.transactions
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  creating a new table for public.ledger_entries
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  moving the data of public.ledger_entries
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  dropping the old public.ledger_entries
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  renaming the new table to public.ledger_entries
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  creating a new table for public.fraud_alerts
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  moving the data of public.fraud_alerts
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  dropping the old public.fraud_alerts
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:39: NOTICE:  renaming the new table to public.fraud_alerts
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:/work/portfolio-5-distributed-cloud/03_citus_sharding_setup.sql:42: NOTICE:  removing table public.cards from metadata as it is not connected to any reference tables via foreign keys
+ALTER TABLE
+ALTER TABLE
+ create_distributed_table 
+--------------------------
+ 
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ create_distributed_table 
+--------------------------
+ 
+(1 row)
+
+ALTER TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE

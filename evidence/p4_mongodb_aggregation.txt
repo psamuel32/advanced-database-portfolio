@@ -1,0 +1,10 @@
+﻿[
+  {
+    event_count: 1,
+    card_schemes: [
+      'MASTERCARD'
+    ],
+    ip_address: '102.89.23.11',
+    distinct_merchants: 1
+  }
+]

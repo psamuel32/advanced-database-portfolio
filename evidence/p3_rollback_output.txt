@@ -1,0 +1,16 @@
+﻿BEGIN
+              account_id              | balance  
+--------------------------------------+----------
+ a1000000-0000-0000-0000-000000000001 | 498.5000
+(1 row)
+
+SAVEPOINT
+psql:/work/portfolio-3-transactions-concurrency/02_rollback_fault_injection.sql:20: ERROR:  new row for relation "accounts" violates check constraint "accounts_balance_check"
+DETAIL:  Failing row contains (a1000000-0000-0000-0000-000000000001, c1000000-0000-0000-0000-000000000001, 1000000001, USD, CHECKING, -701.5000, 1001.0000, ACTIVE, 2026-10-20 16:42:12.856241+00, 2026-10-20 23:16:27.74348+00).
+ROLLBACK
+              account_id              | balance  |          updated_at           
+--------------------------------------+----------+-------------------------------
+ a1000000-0000-0000-0000-000000000001 | 498.5000 | 2026-10-20 23:16:27.479769+00
+(1 row)
+
+COMMIT

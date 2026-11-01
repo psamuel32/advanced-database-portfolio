@@ -1,0 +1,13 @@
+﻿INSERT 0 1
+BEGIN
+              account_id              |  balance  | status 
+--------------------------------------+-----------+--------
+ a1000000-0000-0000-0000-000000000001 | 1001.0000 | ACTIVE
+(1 row)
+
+UPDATE 1
+UPDATE 1
+UPDATE 1
+INSERT 0 1
+INSERT 0 3
+COMMIT

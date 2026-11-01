@@ -1,0 +1,26 @@
+﻿CREATE EXTENSION
+CREATE EXTENSION
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:13: NOTICE:  table "fraud_alerts" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:14: NOTICE:  table "ledger_entries" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:15: NOTICE:  table "transactions" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:16: NOTICE:  table "cards" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:17: NOTICE:  table "merchants" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:18: NOTICE:  table "accounts" does not exist, skipping
+DROP TABLE
+psql:/work/portfolio-1-database-design/01_schema_ddl.sql:19: NOTICE:  table "customers" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER

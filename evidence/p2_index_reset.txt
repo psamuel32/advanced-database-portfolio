@@ -1,0 +1,4 @@
+﻿NOTICE:  index "idx_ledger_acc_posted" does not exist, skipping
+NOTICE:  index "idx_tx_velocity_partial" does not exist, skipping
+NOTICE:  index "idx_tx_dest_status_date" does not exist, skipping
+DROP INDEX

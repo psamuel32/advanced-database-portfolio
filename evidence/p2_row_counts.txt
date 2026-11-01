@@ -1,0 +1,11 @@
+﻿    relname     | n_live_tup 
+----------------+------------
+ ledger_entries |   28401401
+ transactions   |   14200344
+ accounts       |    3099973
+ customers      |    2450006
+ fraud_alerts   |     143000
+ merchants      |     120000
+ cards          |          0
+(7 rows)
+

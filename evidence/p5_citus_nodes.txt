@@ -1,0 +1,5 @@
+﻿ nodename  | nodeport | noderole | shouldhaveshards | isactive 
+-----------+----------+----------+------------------+----------
+ localhost |     5432 | primary  | t                | t
+(1 row)
+

@@ -1,0 +1,12 @@
+﻿             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | accounts       | table | postgres
+ public | cards          | table | postgres
+ public | customers      | table | postgres
+ public | fraud_alerts   | table | postgres
+ public | ledger_entries | table | postgres
+ public | merchants      | table | postgres
+ public | transactions   | table | postgres
+(7 rows)
+
