@@ -161,4 +161,4 @@ cypher-shell -u neo4j -p password -f portfolio-4-nosql/03_neo4j_aml_detection.cy
 | IV. NoSQL implementations | Document (MongoDB), key-value (Redis) and graph (Neo4j) | `portfolio-4/01_mongodb_webhook_events.json`, `portfolio-4/02_redis_rate_limiter.lua`, `portfolio-4/03_neo4j_aml_detection.cypher` |
 | V. Query plans and performance | EXPLAIN ANALYZE trees and indexing benchmarks | `portfolio-2/02_execution_plans.json`, `portfolio-2/03_indexing_benchmarks.md` |
 | VI. Screenshots, configs, test results | Cluster configuration, fault injection tests and Patroni YAML | `portfolio-3/02_rollback_fault_injection.sql`, `portfolio-5/02_patroni_cluster_config.yaml`, `portfolio-5/03_citus_sharding_setup.sql` |
-| VII. Technical documentation and READMEs | Folder READMEs, root README and submission summary | `README.md`, `LMS_SUBMISSION.md`, and the `README.md` in each portfolio folder |
+| VII. Technical documentation and READMEs | Root README and the README in each portfolio folder | `README.md` and the `README.md` in each portfolio folder |
