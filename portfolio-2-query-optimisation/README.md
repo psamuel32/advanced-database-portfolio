@@ -2,7 +2,7 @@
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Queries](https://img.shields.io/badge/complex%20queries-3-informational)
-![Speedup](https://img.shields.io/badge/indexing%20speedup-120x-brightgreen)
+![Speedup](https://img.shields.io/badge/indexing%20speedup-up%20to%205436x-brightgreen)
 
 Author: Praise Samuel (p.okoro4197@miva.edu.ng)
 
@@ -36,8 +36,8 @@ This directory contains the query tuning evidence for the ApexPay dataset:
 ### 3.1 Q1 Running Balance Reconciliation
 
 ```diff
-- Seq Scan on ledger_entries (28.4M rows)          482.4 ms   12,450 shared buffers
-+ Index Scan using idx_ledger_acc_posted              3.8 ms       14 shared buffers
+- Seq Scan on ledger_entries (28.4M rows)        22,766.5 ms   347,552 disk blocks
++ Index Scan using idx_ledger_acc_posted              4.19 ms          12 disk blocks
 ```
 
 Composite ordering on `(account_id, posted_at ASC, entry_id ASC)` matches the window specification exactly. The executor therefore reads B-Tree leaves in already sorted order and the in-memory quicksort node is eliminated entirely.
@@ -45,20 +45,20 @@ Composite ordering on `(account_id, posted_at ASC, entry_id ASC)` matches the wi
 ### 3.2 Q2 Fraud Velocity Surveillance
 
 ```diff
-- Seq Scan on transactions (14.2M rows)            765.2 ms   19,800 shared buffers
-+ Bitmap Index Scan using idx_tx_velocity_partial     6.2 ms       32 shared buffers
+- Seq Scan on transactions (14.2M rows)            3,591.9 ms   233,493 disk blocks
++ Bitmap Index Scan using idx_tx_velocity_partial     233.1 ms        79 disk blocks
 ```
 
-The partial predicate `WHERE transaction_type IN ('P2P_TRANSFER', 'CARD_PAYMENT') AND amount >= 50000.0000` restricts the index to high-value customer-initiated transfers and matches the query predicate exactly. Index size fell from 1.8 GB to 14 MB, which allows the structure to remain resident in cache.
+The partial predicate `WHERE transaction_type IN ('P2P_TRANSFER', 'CARD_PAYMENT') AND amount >= 50000.0000` restricts the index to high-value customer-initiated transfers and matches the query predicate exactly. The captured plan moved from a Seq Scan to a Bitmap Index Scan feeding a Bitmap Heap Scan, and disk block reads fell from 233,493 to 79.
 
 ### 3.3 Q3 Merchant Net Settlement
 
 ```diff
-- Hash Join + Seq Scan                             512.0 ms   14,200 shared buffers
-+ Index Only Scan using idx_tx_dest_status_date      4.9 ms       22 shared buffers
+- Hash Join + Seq Scan                           4,445.1 ms   240,507 disk blocks
++ Merge Join (Index Only + Index Scan)           1,647.4 ms    30,385 disk blocks
 ```
 
-The `INCLUDE (amount, fee_amount, currency)` clause stores the payload columns in the leaf pages. The aggregation is satisfied entirely from index buffers, so the executor never reads heap pages.
+The `INCLUDE (amount, fee_amount, currency)` clause stores the payload columns in the leaf pages, so the executor can read much of the projection from the index rather than the heap. The gain here is the smallest of the three queries: disk reads fell from 240,507 to 30,385 blocks and the runtime from 4,445.1 ms to 1,647.4 ms (2.7x). The query aggregates a full day of settled transactions, and the planner retained a merge join, so the covering index reduced heap traffic without removing the day-range scan.
 
 ---
 

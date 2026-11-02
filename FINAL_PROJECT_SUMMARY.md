@@ -82,15 +82,15 @@ Three production SQL queries were authored and benchmarked against 28.4 million 
 Q1, Running Balance Reconciliation (operational). Employs the window function `SUM() OVER (PARTITION BY account_id ORDER BY posted_at ASC, entry_id ASC)` with a CTE to audit running ledger totals against snapshot balances.
 
 ```diff
-- Seq Scan on ledger_entries (28.4M rows)          482.4 ms   12,450 shared buffers
-+ Index Scan using idx_ledger_acc_posted              3.8 ms       14 shared buffers
+- Seq Scan on ledger_entries (28.4M rows)        22,766.5 ms   347,552 disk blocks
++ Index Scan using idx_ledger_acc_posted              4.19 ms          12 disk blocks
 ```
 
 Q2, Fraud Velocity Surveillance (security and AML). Analyses a 30-minute sliding window using `DENSE_RANK()` with an aggregate `HAVING COUNT(*) >= 3` filter to detect automated account takeover bursts.
 
 ```diff
-- Seq Scan on transactions (14.2M rows)            765.2 ms   19,800 shared buffers
-+ Bitmap Index Scan using idx_tx_velocity_partial     6.2 ms       32 shared buffers
+- Seq Scan on transactions (14.2M rows)            3,591.9 ms   233,493 disk blocks
++ Bitmap Index Scan using idx_tx_velocity_partial     233.1 ms        79 disk blocks
 ```
 
 > [!NOTE]
@@ -99,8 +99,8 @@ Q2, Fraud Velocity Surveillance (security and AML). Analyses a 30-minute sliding
 Q3, Merchant Net Settlement (financial). Aggregates daily transaction volume, nets contract interchange fees, and groups by merchant category code.
 
 ```diff
-- Hash Join + Seq Scan                             512.0 ms   14,200 shared buffers
-+ Index Only Scan using idx_tx_dest_status_date      4.9 ms       22 shared buffers
+- Hash Join + Seq Scan                           4,445.1 ms   240,507 disk blocks
++ Merge Join (Index Only + Index Scan)           1,647.4 ms    30,385 disk blocks
 ```
 
 > [!IMPORTANT]
